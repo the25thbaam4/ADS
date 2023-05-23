@@ -4,14 +4,24 @@ import aufgabe1.VideoGame;
 public class Main{
     public static void main(String[]args){
 
-        VideoGame ne = new VideoGame("god",9.5,2015);
-        VideoGame me = new VideoGame("some", 7.1,2016);
+        VideoGame ne = new VideoGame("god",23,2015,10);
+        VideoGame me = new VideoGame("some", 29.00, 2016,9.1);
         DoublyLinkedList list = new DoublyLinkedList();
         list.insertAtEnd(ne);
-        list.display();
-        System.out.println(ne.getGamesName());
+       // list.display();
+
         list.insertAtEnd(me);
-        System.out.println();
+
+
+        //list.display();
+        VideoGame de = new VideoGame("second one after ome",24.919,2020,10.1);
+        list.insertAtEnd(de);
+        list.display();
+       // System.out.println(me);
+      //System.out.println(ne);
+       // System.out.println(de);
+
+        list.addGame();
         list.display();
 
     }
