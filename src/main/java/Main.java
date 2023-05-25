@@ -16,13 +16,23 @@ public class Main{
         //list.display();
         VideoGame de = new VideoGame("second one after ome",24.919,2020,10.1);
         list.insertAtEnd(de);
-        list.display();
+      //  list.display();
        // System.out.println(me);
       //System.out.println(ne);
-       // System.out.println(de);
+      //  System.out.println(de);
 
-        list.addGame();
+     //   list.addGame();
+
+      //
+        VideoGame gamess = new VideoGame("h3ello",29.99, 2022, 9.9);
         list.display();
+        list.insertAtEnd(gamess);
+
+        list.editGameAttribute(de);
+
+        list.display();
+
+
 
     }
 }

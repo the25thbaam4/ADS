@@ -42,6 +42,14 @@ public class VideoGame {
         this.yearOfRelease = yearOfRelease;
     }
 
+    public int getId() {
+        return id;
+    }
+
+   public void setId(int id){
+        this.id = id;
+    }
+
 
 
     public VideoGame(String gamesName, double price, int yearOfRelease, double rating) {
@@ -61,11 +69,5 @@ public class VideoGame {
         return String.format("%-4s | %-35s\t\t\t | %9s\t | %17d\t | %6.1f",id, gamesName, df.format(price) +" €", yearOfRelease, rating) + System.lineSeparator();
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }
