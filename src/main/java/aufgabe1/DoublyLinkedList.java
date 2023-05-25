@@ -38,7 +38,7 @@ public class DoublyLinkedList {
             System.out.println("The list is empty!");
 
         }
-        System.out.printf("%-4s | %-35s\t\t\t | %9s\t | %17s\t | %2s%n", "ID", "Game's Name  ", "Price ", "Year of release", "Rating");
+        System.out.printf("\n%-4s | %-35s\t\t\t | %9s\t | %17s\t | %2s%n", "ID", "Game's Name  ", "Price ", "Year of release", "Rating");
         System.out.println("_____________________________________________________________________________________________________");
 
         Node currentNode = head;
@@ -60,20 +60,46 @@ public class DoublyLinkedList {
     }
 
     public void addGame() {
-        System.out.println("Please Enter Name of the game, its Price, year of release and rating");
-        String gameName = sc.nextLine();
-        DecimalFormat df = new DecimalFormat("#.00");
-        double price = (sc.nextDouble());
-        // price = Double.parseDouble(df.format(price));
-        int releaseYear = sc.nextInt();
-        double rating = sc.nextDouble();
+
+        String gameName = "";
+        double price;
+        int releaseYear;
+        double rating;
+        try {
+            System.out.print("Enter the game's name: ");
+            while(gameName.trim().isEmpty()){
+                gameName = sc.nextLine();
+            }
+
+
+            System.out.print("Enter the price: ");
+            price = sc.nextDouble();
+
+
+            System.out.print("Enter year of release: ");
+            releaseYear = sc.nextInt();
+
+            System.out.print("Enter rating: ");
+            rating = sc.nextDouble();
+        }
+        catch (InputMismatchException e){
+            System.out.println("Invalid choice try again");
+            return;
+        }
 
         VideoGame newGame = new VideoGame(gameName, price, releaseYear, rating);
         insertAtEnd(newGame);
 
     }
 
-    public void editGame(int gameId) {
+    public void editGame() {
+        if (isEmpty()){
+            System.out.println("List is empty!");
+            return;
+        }
+        System.out.println("Enter the ID of the game you want to edit: ");
+        int gameId = sc.nextInt();
+        sc.nextLine();
         Node currentNode = head;
         while (currentNode != null) {
             if (currentNode.game.getId() == gameId) {
@@ -143,6 +169,101 @@ public class DoublyLinkedList {
             }
         }
     }
+
+
+
+    public void removeGame(){
+        if (isEmpty()){
+            System.out.println("List is empty");
+            return;
+        }
+
+        System.out.println("Enter the ID of the game you want to delete: ");
+        int gameId = sc.nextInt();
+        sc.nextLine();
+        Node temp = head;
+        while( temp != null ){
+                if(temp.game.getId() == gameId){
+
+                    if (temp == head){
+                        head = temp.next;
+                        if(head != null){
+                            head.prev = null;
+                        }
+                    }
+                    else {
+                        temp.prev.next = temp.next;
+                        if (temp.next != null){
+                            temp.next.prev = temp.prev;
+                        }
+                    }
+                    if (temp == tail){
+                        tail = temp.prev;
+                    }
+                    return;
+                }
+                temp = temp.next;
+        }
+
+
+        System.out.println("Game not found!");
+
+
+
+
+
+    }
+
+
+    public void startOperations(){
+
+        int userInput = -1;
+        while(userInput != 0){
+            System.out.println("Welcome to the operations menu:" + System.lineSeparator() +
+                    "1. Display the list" + System.lineSeparator() +
+                    "2. Add an element to the list" + System.lineSeparator() +
+                    "3. Edit an element in the list" + System.lineSeparator() +
+                    "4. Remove an element from the list" + System.lineSeparator() + System.lineSeparator() +
+                    "0. Quit");
+
+            try {
+                userInput = sc.nextInt();
+
+                switch (userInput){
+
+                    case 0:
+                        System.out.println("Ending the program!");
+                        break;
+                    case 1:
+                        display();
+                        break;
+                    case 2:
+                        addGame();
+                        break;
+                    case 3:
+                        editGame();
+                        break;
+                    case 4:
+                        removeGame();
+
+                    default:
+                        System.out.println("Input not valid");
+                        break;
+
+                }
+
+
+
+
+            } catch (IllegalArgumentException e) {
+                System.out.println("Input not valid try again!");
+                sc.nextLine();
+            }
+
+
+        }
+    }
+
 }
 
 
