@@ -25,11 +25,12 @@ public class Main{
 
       //
         VideoGame gamess = new VideoGame("h3ello",29.99, 2022, 9.9);
-        list.display();
+
         list.insertAtEnd(gamess);
 
-        list.editGameAttribute(de);
+        list.display();
 
+        list.editGameAttribute(de);
         list.display();
 
 

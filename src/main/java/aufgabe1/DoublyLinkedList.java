@@ -112,9 +112,8 @@ public class DoublyLinkedList {
                         gameToEdit.setGamesName(newGameName);
                         break;
                     case 2:
-                        System.out.print("Enter the new Price: ");
+                        System.out.print("Enter the new Price: " + System.lineSeparator()+"Use comma, please: ");
                         // DecimalFormat df = new DecimalFormat("#.00");
-
                         double newPrice = sc.nextDouble();
                         sc.nextLine();
                         gameToEdit.setPrice(newPrice);
@@ -125,7 +124,7 @@ public class DoublyLinkedList {
                         gameToEdit.setYearOfRelease(newReleaseYear);
                         break;
                     case 4:
-                        System.out.print("Enter the new Rating: ");
+                        System.out.print("Enter the new Rating: " + System.lineSeparator()+"Use comma, please: ");
                         double newRating = sc.nextDouble();
                         sc.nextLine();
                         gameToEdit.setRating(newRating);
