@@ -214,12 +214,23 @@ public class DoublyLinkedList {
 
     }
 
+        //TODO implement sort method
+    public void sortList(){
+        if (isEmpty()){
+            System.out.println("List is Empty;");
+            return;
+        }
 
+        if (head == tail){
+            System.out.println("List has only one element");
+        }
+
+    }
     public void startOperations(){
 
         int userInput = -1;
         while(userInput != 0){
-            System.out.println("Welcome to the operations menu:" + System.lineSeparator() +
+            System.out.println("\nWelcome to the operations menu:" + System.lineSeparator() +
                     "1. Display the list" + System.lineSeparator() +
                     "2. Add an element to the list" + System.lineSeparator() +
                     "3. Edit an element in the list" + System.lineSeparator() +
@@ -245,6 +256,8 @@ public class DoublyLinkedList {
                         break;
                     case 4:
                         removeGame();
+                    case 5:
+                        sortList();
 
                     default:
                         System.out.println("Input not valid");
@@ -255,7 +268,7 @@ public class DoublyLinkedList {
 
 
 
-            } catch (IllegalArgumentException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Input not valid try again!");
                 sc.nextLine();
             }
