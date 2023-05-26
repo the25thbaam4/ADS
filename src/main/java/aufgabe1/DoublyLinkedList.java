@@ -231,15 +231,17 @@ public class DoublyLinkedList {
     private void sortByPrice(Node start, Node end){
         if (start != null && end != null && start != end){
             Node partitionNode = partitionByPrice(start,end);
-            sortByPrice(start, partitionNode.prev);
-            sortByPrice(partitionNode.next, end);
-        }
+           if (partitionNode != null) {
+               sortByPrice(start, partitionNode.prev);
+               sortByPrice(partitionNode.next, end);
+           }
+           }
     }
 
     private Node partitionByPrice(Node start, Node end){
         double pivot = end.game.getPrice();
         Node temp = start.prev;
-        for (Node tempNext = start; tempNext != end; tempNext = tempNext.next){
+        for (Node tempNext = start; tempNext != null && tempNext != end; tempNext = tempNext.next){
             if(tempNext.game.getPrice() <= pivot){
                 if (temp == null ){
                     temp = start;
@@ -261,9 +263,17 @@ public class DoublyLinkedList {
     }
 
     private void swapGames(Node node1, Node node2){
+       if (node1 != null && node2 != null){
+
+
         VideoGame temp = node1.game;
         node1.game = node2.game;
         node2.game = temp;
+    }}
+
+
+    private void sortByName(){
+
     }
 
     public void startOperations() {
