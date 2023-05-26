@@ -8,6 +8,8 @@ public class DoublyLinkedList {
     private Node head;
     private Node tail;
     private int counter;
+    public static final String NEWLINE = System.getProperty("line.separator");
+
     Scanner sc = new Scanner(System.in);
 
     public DoublyLinkedList() {
@@ -67,7 +69,7 @@ public class DoublyLinkedList {
         double rating;
         try {
             System.out.print("Enter the game's name: ");
-            while(gameName.trim().isEmpty()){
+            while (gameName.trim().isEmpty()) {
                 gameName = sc.nextLine();
             }
 
@@ -81,8 +83,7 @@ public class DoublyLinkedList {
 
             System.out.print("Enter rating: ");
             rating = sc.nextDouble();
-        }
-        catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("Invalid choice try again");
             return;
         }
@@ -93,7 +94,7 @@ public class DoublyLinkedList {
     }
 
     public void editGame() {
-        if (isEmpty()){
+        if (isEmpty()) {
             System.out.println("List is empty!");
             return;
         }
@@ -116,12 +117,12 @@ public class DoublyLinkedList {
 
         int userChoice = -1;
         while (userChoice != 0) {
-            System.out.println("Welcome to the edit menu:" + System.lineSeparator() +
-                    "1. Edit Name" + System.lineSeparator() +
-                    "2. Edit Price" + System.lineSeparator() +
-                    "3. Edit Year of release" + System.lineSeparator() +
-                    "4. Edit Rating" + System.lineSeparator() + System.lineSeparator() +
-                    "0. Quit Edit Menu");
+            System.out.println("Welcome to the edit menu:" + NEWLINE +
+                    "1. Edit Name" + NEWLINE +
+                    "2. Edit Price" + NEWLINE +
+                    "3. Edit Year of release" + NEWLINE +
+                    "4. Edit Rating" + NEWLINE + NEWLINE + Color.RED_BOLD +
+                    "0. Quit Edit Menu" + Color.RESET);
             try {
                 userChoice = sc.nextInt();
 
@@ -138,7 +139,7 @@ public class DoublyLinkedList {
                         gameToEdit.setGamesName(newGameName);
                         break;
                     case 2:
-                        System.out.print("Enter the new Price: " + System.lineSeparator()+"Use comma, please: ");
+                        System.out.print("Enter the new Price: " + NEWLINE + "Use comma, please: ");
                         // DecimalFormat df = new DecimalFormat("#.00");
                         double newPrice = sc.nextDouble();
                         sc.nextLine();
@@ -150,14 +151,14 @@ public class DoublyLinkedList {
                         gameToEdit.setYearOfRelease(newReleaseYear);
                         break;
                     case 4:
-                        System.out.print("Enter the new Rating: " + System.lineSeparator()+"Use comma, please: ");
+                        System.out.print("Enter the new Rating: " + NEWLINE + "Use comma, please: ");
                         double newRating = sc.nextDouble();
                         sc.nextLine();
                         gameToEdit.setRating(newRating);
 
                         break;
                     default:
-                        System.out.println("try again");
+                        System.out.println("Try again");
                         break;
                 }
 
@@ -171,9 +172,8 @@ public class DoublyLinkedList {
     }
 
 
-
-    public void removeGame(){
-        if (isEmpty()){
+    public void removeGame() {
+        if (isEmpty()) {
             System.out.println("List is empty");
             return;
         }
@@ -182,90 +182,114 @@ public class DoublyLinkedList {
         int gameId = sc.nextInt();
         sc.nextLine();
         Node temp = head;
-        while( temp != null ){
-                if(temp.game.getId() == gameId){
+        while (temp != null) {
+            if (temp.game.getId() == gameId) {
 
-                    if (temp == head){
-                        head = temp.next;
-                        if(head != null){
-                            head.prev = null;
-                        }
+                if (temp == head) {
+                    head = temp.next;
+                    if (head != null) {
+                        head.prev = null;
                     }
-                    else {
-                        temp.prev.next = temp.next;
-                        if (temp.next != null){
-                            temp.next.prev = temp.prev;
-                        }
+                } else {
+                    temp.prev.next = temp.next;
+                    if (temp.next != null) {
+                        temp.next.prev = temp.prev;
                     }
-                    if (temp == tail){
-                        tail = temp.prev;
-                    }
-                    return;
                 }
-                temp = temp.next;
+                if (temp == tail) {
+                    tail = temp.prev;
+                }
+                return;
+            }
+            temp = temp.next;
         }
 
 
         System.out.println("Game not found!");
 
 
-
-
-
     }
 
-        //TODO implement sort method
-    public void sortList(){
-        if (isEmpty()){
-            System.out.println("List is Empty;");
+    //TODO implement Quicksort method
+
+    public void sortList() {
+
+        if (isEmpty()) {
+            System.out.println("List is Empty.");
+            return;
+        } else if (head == tail) {
+            System.out.println("List has only one element");
             return;
         }
-
-        if (head == tail){
-            System.out.println("List has only one element");
+        System.out.println("sorting");
+        sortByPrice(head,tail);
+        System.out.println("sorted");
+        display();
         }
 
+
+    private void sortByPrice(Node start, Node end){
+        if (start != null && end != null && start != end){
+            Node partitionNode = partitionByPrice(start,end);
+            sortByPrice(start, partitionNode.prev);
+            sortByPrice(partitionNode.next, end);
+        }
     }
-    public void startOperations(){
+
+    private Node partitionByPrice(Node start, Node end){
+        double pivot = end.game.getPrice();
+        Node temp = start.prev;
+        for (Node tempNext = start; tempNext != end; tempNext = tempNext.next){
+            if(tempNext.game.getPrice() <= pivot){
+                if (temp == null ){
+                    temp = start;
+                }
+                else {
+                    temp = temp.next;
+                }
+                swapGames(temp, tempNext);
+            }
+        }
+        if (temp == null){
+            temp = start;
+        }
+        else {
+            temp = temp.next;
+        }
+        swapGames(temp, end);
+        return temp;
+    }
+
+    private void swapGames(Node node1, Node node2){
+        VideoGame temp = node1.game;
+        node1.game = node2.game;
+        node2.game = temp;
+    }
+
+    public void startOperations() {
 
         int userInput = -1;
-        while(userInput != 0){
-            System.out.println("\nWelcome to the operations menu:" + System.lineSeparator() +
-                    "1. Display the list" + System.lineSeparator() +
-                    "2. Add an element to the list" + System.lineSeparator() +
-                    "3. Edit an element in the list" + System.lineSeparator() +
-                    "4. Remove an element from the list" + System.lineSeparator() + System.lineSeparator() +
-                    "0. Quit");
+        while (userInput != 0) {
+            System.out.println("\nWelcome to the operations menu:" + NEWLINE +
+                    "1. Display the list" + NEWLINE +
+                    "2. Add an element to the list" + NEWLINE +
+                    "3. Edit an element in the list" + NEWLINE +
+                    "4. Remove an element from the list" + NEWLINE +
+                    "5. Sort list" + NEWLINE + NEWLINE + Color.RED_BOLD +
+                    "0. Quit" + Color.RESET);
 
             try {
                 userInput = sc.nextInt();
 
-                switch (userInput){
-
-                    case 0:
-                        System.out.println("Ending the program!");
-                        break;
-                    case 1:
-                        display();
-                        break;
-                    case 2:
-                        addGame();
-                        break;
-                    case 3:
-                        editGame();
-                        break;
-                    case 4:
-                        removeGame();
-                    case 5:
-                        sortList();
-
-                    default:
-                        System.out.println("Input not valid");
-                        break;
-
+                switch (userInput) {
+                    case 0 -> System.out.println("Ending the program!");
+                    case 1 -> display();
+                    case 2 -> addGame();
+                    case 3 -> editGame();
+                    case 4 -> removeGame();
+                    case 5 -> sortList();
+                    default -> System.out.println("Input not valid");
                 }
-
-
 
 
             } catch (InputMismatchException e) {
