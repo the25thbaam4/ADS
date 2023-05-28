@@ -8,6 +8,7 @@ public class DoublyLinkedList {
     private Node head;
     private Node tail;
     private int counter;
+
     public static final String NEWLINE = System.getProperty("line.separator");
 
     Scanner sc = new Scanner(System.in);
@@ -67,31 +68,44 @@ public class DoublyLinkedList {
         double price;
         int releaseYear;
         double rating;
-        try {
-            System.out.print("Enter the game's name: ");
-            while (gameName.trim().isEmpty()) {
-                gameName = sc.nextLine();
+
+        while (true) {
+            try {
+                System.out.print("Enter the game's name: ");
+                while (gameName.trim().isEmpty()) {
+                    gameName = sc.nextLine();
+                }
+
+
+                System.out.print("Enter the price. Format 99,90: ");
+                price = sc.nextDouble();
+
+
+                System.out.print("Enter year of release: ");
+                releaseYear = sc.nextInt();
+                if (releaseYear < 1980 || releaseYear > 2023) {
+                    System.out.println("Invalid year. Please Enter a year between 1980 and 2023.");
+                    continue;
+                }
+
+                System.out.print("Enter rating between 0,0 and 10,0: ");
+                rating = sc.nextDouble();
+                if (rating < 0 || rating > 10) {
+                    System.out.println("Invalid rating. Rating must be between 0,0 and 10,0");
+                    continue;
+                }
+
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid choice try again");
+                return;
             }
 
-
-            System.out.print("Enter the price: ");
-            price = sc.nextDouble();
-
-
-            System.out.print("Enter year of release: ");
-            releaseYear = sc.nextInt();
-
-            System.out.print("Enter rating: ");
-            rating = sc.nextDouble();
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid choice try again");
-            return;
+        }
+            VideoGame newGame = new VideoGame(gameName, price, releaseYear, rating);
+            insertAtEnd(newGame);
         }
 
-        VideoGame newGame = new VideoGame(gameName, price, releaseYear, rating);
-        insertAtEnd(newGame);
-
-    }
 
     public void editGame() {
         if (isEmpty()) {
@@ -210,7 +224,6 @@ public class DoublyLinkedList {
 
     }
 
-    //TODO implement Quicksort method
 
     public void sortList() {
 
@@ -221,60 +234,110 @@ public class DoublyLinkedList {
             System.out.println("List has only one element");
             return;
         }
-        System.out.println("sorting");
-        sortByPrice(head,tail);
-        System.out.println("sorted");
-        display();
+        boolean isSorted = false;
+        while(!isSorted){
+
+           try {
+               System.out.println("Please choose by which you want to sort: "+ NEWLINE
+               +"1. Sort by Name." + NEWLINE
+               +"2. Sort by price." + NEWLINE + NEWLINE
+               +"0. Exit sort Menu.");
+               int sortChoice = sc.nextInt();
+
+               switch (sortChoice){
+
+                   case 0 -> {
+                       System.out.println("Exit sort.");
+                       isSorted = true;
+                   }
+                   case 1 -> {
+                       sortByName();
+                       System.out.println("List sorted by name: ");
+                       display();
+                   }
+                   case 2 -> {
+                       sortByPrice(head,tail);
+                       System.out.println("List sorted by price: ");
+                       display();
+                   }
+                   default -> System.out.println("Wrong input. Try again!");
+               }
+
+
+           } catch (InputMismatchException e) {
+               System.out.println("Input not allowed. Try Again");
+               sc.nextLine();
+
+           }
         }
-
-
-    private void sortByPrice(Node start, Node end){
-        if (start != null && end != null && start != end){
-            Node partitionNode = partitionByPrice(start,end);
-           if (partitionNode != null) {
-               sortByPrice(start, partitionNode.prev);
-               sortByPrice(partitionNode.next, end);
-           }
-           }
     }
 
-    private Node partitionByPrice(Node start, Node end){
+
+    private void sortByPrice(Node start, Node end) {
+        if (start != null && end != null && start != end) {
+            Node partitionNode = partitionByPrice(start, end);
+            if (partitionNode != null) {
+                sortByPrice(start, partitionNode.prev);
+                sortByPrice(partitionNode.next, end);
+            }
+        }
+    }
+
+    private Node partitionByPrice(Node start, Node end) {
         double pivot = end.game.getPrice();
         Node temp = start.prev;
-        for (Node tempNext = start; tempNext != null && tempNext != end; tempNext = tempNext.next){
-            if(tempNext.game.getPrice() <= pivot){
-                if (temp == null ){
+        for (Node tempNext = start; tempNext != null && tempNext != end; tempNext = tempNext.next) {
+            if (tempNext.game.getPrice() <= pivot) {
+                if (temp == null) {
                     temp = start;
-                }
-                else {
+                } else {
                     temp = temp.next;
                 }
                 swapGames(temp, tempNext);
             }
         }
-        if (temp == null){
+        if (temp == null) {
             temp = start;
-        }
-        else {
+        } else {
             temp = temp.next;
         }
         swapGames(temp, end);
         return temp;
     }
 
-    private void swapGames(Node node1, Node node2){
-       if (node1 != null && node2 != null){
+    private void swapGames(Node node1, Node node2) {
+        if (node1 != null && node2 != null) {
 
 
-        VideoGame temp = node1.game;
-        node1.game = node2.game;
-        node2.game = temp;
-    }}
-
-
-    private void sortByName(){
-
+            VideoGame temp = node1.game;
+            node1.game = node2.game;
+            node2.game = temp;
+        }
     }
+
+
+    private void sortByName() {
+        boolean swapped;
+        Node currentNode;
+        Node lastSorted = null;
+
+        do {
+            swapped = false;
+            currentNode = head;
+
+            while (currentNode.next != lastSorted) {
+                if (currentNode.game.compareTo(currentNode.next.game) > 0) {
+                    VideoGame temp = currentNode.game;
+                    currentNode.game = currentNode.next.game;
+                    currentNode.next.game = temp;
+                    swapped = true;
+                }
+                currentNode = currentNode.next;
+            }
+            lastSorted = currentNode;
+        } while (swapped);
+    }
+
 
     public void startOperations() {
 
@@ -310,6 +373,7 @@ public class DoublyLinkedList {
 
         }
     }
+
 
 }
 

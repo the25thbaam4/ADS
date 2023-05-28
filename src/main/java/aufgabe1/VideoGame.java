@@ -2,7 +2,7 @@ package aufgabe1;
 
 import java.text.DecimalFormat;
 
-public class VideoGame {
+public class VideoGame implements Comparable <VideoGame> {
 
     private int id;
     private double price ;
@@ -70,4 +70,8 @@ public class VideoGame {
     }
 
 
+    @Override
+    public int compareTo(VideoGame otherGame) {
+        return this.gamesName.compareTo(otherGame.gamesName);
+    }
 }
