@@ -1,5 +1,4 @@
-import aufgabe1.DoublyLinkedList;
-import aufgabe1.VideoGame;
+import doublyLinkedList.DoublyLinkedList;
 
 public class Main{
     public static void main(String[]args){

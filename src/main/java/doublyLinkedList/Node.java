@@ -1,4 +1,4 @@
-package aufgabe1;
+package doublyLinkedList;
 
 public class Node {
     public Node prev;

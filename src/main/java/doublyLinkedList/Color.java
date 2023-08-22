@@ -1,4 +1,4 @@
-package aufgabe1;
+package doublyLinkedList;
 
 enum Color {
     //Color end string, color reset

@@ -1,4 +1,4 @@
-package aufgabe1;
+package doublyLinkedList;
 
 import java.text.DecimalFormat;
 
