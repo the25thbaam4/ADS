@@ -7,3 +7,4 @@ A simple console interactive doubly linked list implementation with basic CRUD o
 
 
 ![GIF](src/main/java/resources/DDL.gif)
+<img src="src/main/java/resources/DDL.gif"/>
