@@ -5,6 +5,6 @@ A simple console interactive doubly linked list implementation with basic CRUD o
 4. Remove an element from the list
 5. Sort list
 
-<img src="[URL_TO_YOUR_ANIMATED_GIF](https://drive.google.com/file/d/1k_vjvXha22yrdE7A8teCs1sFkarv1FUo/view?usp=sharing)https://drive.google.com/file/d/1k_vjvXha22yrdE7A8teCs1sFkarv1FUo/view?usp=sharing" alt="Animated GIF" width="300"/>
+<img src="(https://drive.google.com/file/d/1k_vjvXha22yrdE7A8teCs1sFkarv1FUo/view?usp=sharing)https://drive.google.com/file/d/1k_vjvXha22yrdE7A8teCs1sFkarv1FUo/view?usp=sharing" alt="Animated GIF" width="300"/>
 
 ![hippo](https://drive.google.com/file/d/1k_vjvXha22yrdE7A8teCs1sFkarv1FUo/view?usp=sharing)
